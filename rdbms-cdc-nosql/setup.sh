@@ -3,29 +3,9 @@
 cd $(dirname $0)
 . ../scripts/dev-local.sh
 
-
-function heading() {
-  tput setaf 2; printf "\n\n$@\n"; tput sgr 0
-}
-
-function footing() {
-  tput setaf 4; printf "\n$@\n\n"; tput sgr 0
-}
-
-function subheading() {
-  tput setaf 3; printf "\n$@\n\n"; tput sgr 0
-}
-
-BIN=${DEV_LOCAL}/bin
-CONNECT=$BIN/connect
-
-alias kt='kafka-topics --bootstrap-server localhost:19092,localhost:29092,localhost:39092'
-
-$CONNECT available
-[ $? -ne 0 ] && echo "connector RESTful API is not yet available, aborting script. wait until connector is ready to run this script." && exit 1
+is_connect_ready
 
 heading "setup: started"
-
 
 subheading "kafka: create topics"
 

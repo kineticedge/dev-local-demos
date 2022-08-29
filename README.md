@@ -4,7 +4,7 @@ Each folder is a demonstration that leverages the `dev-local` environment to sho
 
 ## Demo structure
 
-* The scripts are structured assuming `kafka-local` is a sibling directory to this `kafka-local-demos` project.
+* The scripts are structured assuming `dev-local` is a sibling directory to this `dev-local-demos` project.
 
 * `./build.sh` - anything that needs to be done prior to starting containers.
 
@@ -17,26 +17,31 @@ Each folder is a demonstration that leverages the `dev-local` environment to sho
 
   * Execute this with a fully up and running cluster.
   * If you are wanting to learn more about the demo, this is the script to investigate.
+  * This is mostly an "all-in-one" script, but some things (for various reasons with the demo) may be excluded, please read the README for the specific demo.
 
-* `./ksql.sh`t - if the demonstraion leverages __ksqlDB__, this is the script to configure all of it. 
+* `./ksql.sh` - if the demonstration leverages __ksqlDB__, this is the script to configure all of it. 
 
-  * This is separated from `setup.sh` at it is the core demonstration of the stream processing.
+  * ksqlDB requires schema to be available on the registry, before they can be used. 
 
-  * Demonstrations that leverage Schema's should load data into the topic prior to setting up the ksql scripts,
-to have the schemas available prior to creating the scripts.
+  * If a demo has ksql.sh referenced from the `setup.sh` script, then it also pre-creates the schemas.
+
+  * Even if a demo does pre-create schema and sets up through `setup.sh` it will still be self-contained in a `ksql.sh` script for readability.
   
 * `./down.sh` - brings down the containers startd with `./up.sh` and remove any volumes.
 
 * `./stop.sh` - stops all the containers that were started with `up.sh`.
 
-  * volumes not removed, so restarting with `up.sh` does not require any re-execution of `setup.sh` or other setup script.
-* If a demonstration has additional scripts, it will noted in that demonstration's README.
+  * this is equivalent to `down.sh` but w/out removing the volumes.
+  
+* Each demonstration will have it's own setup, see the specific README for details.
+
 ## Service passwords
 
 * The admin account username for the applications that require one is `admin`.
 
-* The admin account password is the application name, when possible. For example, the password for `grafana` is `grafana`.
-Some systems have password requirements that makes this poor passwords not allowed. The password for `minio` is `miniominio`.
+* The admin account password is the application name, unless the system prevents it. For example, the password for `grafana` is `grafana`.
+
+* Currently only `minio` has password rules that prevents this. It's password is `miniominio`.
 
 ## Demos
 
@@ -69,4 +74,3 @@ Some systems have password requirements that makes this poor passwords not allow
   * Elasticsearch
 
   Please see the respective technologies license policy to ensure you are using it in accordance with their license.
-The licensing of connectors is included, since it can be easy to assume the wrong licensing or wrong company behind them.

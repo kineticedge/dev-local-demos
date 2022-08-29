@@ -23,6 +23,10 @@
         "ORDER_TS": {
           "type": "long"
         },
+        "ORDER_DATE": {
+          "type": "date",
+          "format": "epoch_millis"
+        },
         "QUANTITY": {
           "type": "long"
         },
