@@ -6,11 +6,7 @@
       "inputSource": {
         "type": "s3",
         "prefixes": [
-          "s3://sku/topics/skus/y=2022/m=01/",
-          "s3://sku/topics/skus/y=2022/m=02/",
-          "s3://sku/topics/skus/y=2022/m=03/",
-          "s3://sku/topics/skus/y=2022/m=04/",
-          "s3://sku/topics/skus/y=2022/m=05/"
+          "s3://sku/topics/skus/y=2022/m=09/"
         ],
         "properties": {
           "secretAccessKey": {
@@ -31,7 +27,7 @@
       "type": "index_parallel"
     },
     "dataSchema": {
-      "dataSource": "skus2",
+      "dataSource": "skus_without_late_batch",
       "timestampSpec": {
         "column": "timestamp",
         "format": "auto"
@@ -58,12 +54,12 @@
         "type": "uniform",
         "segmentGranularity": {
           "type": "duration",
-          "duration": "300000"
+          "duration": "3600000"
         },
         "queryGranularity": "minute",
         "rollup": true,
         "intervals": [
-          "2022-01-01T00:00:00/2022-05-01T00:00:00"
+          "2022-09-01T00:00:00/2022-10-01T00:00:00"
         ]
       },
       "transformSpec": {

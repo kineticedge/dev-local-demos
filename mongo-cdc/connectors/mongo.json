@@ -1,0 +1,24 @@
+{
+  "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+  "tasks.max": 1,
+
+  "connection.uri": "mongodb://root:mongo@mongo:27017",
+  "database": "backup",
+  "collection": "orders",
+
+  "topics": "_cdc_.main.orders",
+
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "key.converter.schemas.enable": "false",
+
+  "_value.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter.schemas.enable": "false",
+
+  "errors.tolerance": "all",
+  "errors.deadletterqueue.topic.name":"connect.sink.dlt.MongoSinkConnector",
+  "errors.log.include.messages" : true,
+  "errors.deadletterqueue.context.headers.enable" : true,
+  "errors.deadletterqueue.topic.replication.factor": 3
+
+}
