@@ -1,0 +1,58 @@
+{
+  "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+
+  "_comment" : "Yes, tt is actually PostgreSqlDatabaseDialect (not PostgresSqlDatabaseDialect)",
+  "dialect.name": "PostgreSqlDatabaseDialect",
+
+  "_comment" : "by putting the URL in a secret, it is easier to use this same configuration in other environments",
+  "connection.url": "${file:/etc/kafka-connect/secrets/postgres.properties:CONNECTION_URL}",
+  "connection.user" : "${file:/etc/kafka-connect/secrets/postgres.properties:CONNECTION_USER}",
+  "connection.password" : "${file:/etc/kafka-connect/secrets/postgres.properties:CONNECTION_PASSWORD}",
+
+  "tasks.max": "4",
+
+  "_comment": "if the connect cluster uses these as the default, they can be omitted",
+  "key.converter": "io.confluent.connect.avro.AvroConverter",
+  "key.converter.schemas.enable": "true",
+  "key.converter.schema.registry.url": "http://schema-registry:8081",
+  "value.converter": "io.confluent.connect.avro.AvroConverter",
+  "value.converter.schemas.enable": "true",
+  "value.converter.schema.registry.url": "http://schema-registry:8081",
+
+  "topics.regex": "ORDERS_WITH_SCHEMA",
+  "table.name.format": "${topic}",
+
+  "_comment" : "quote to avoid table and column names conflicting with keywords",
+  "quote.sql.identifiers": "always",
+  "quote.database.names": "always",
+  "quote.table.names": "always",
+  "quote.column.names": "always",
+
+  "connection.attempts" : "3",
+  "connection.backoff.ms" : "100",
+  "max.retries": "3",
+  "retry.backoff.ms": "100",
+  "auto.create": "false",
+  "insert.mode": "upsert",
+  "batch.size": "1",
+  "_batch.size": "1000",
+
+  "_comment" : "error handler settings, log and continue best for POCs",
+  "errors.tolerance": "all",
+  "errors.log.enable": "true",
+  "errors.log.include.messages": "true",
+  "errors.deadletterqueue.context.headers.enable": "true",
+  "errors.deadletterqueue.topic.name": "JdbcSinkConnector_errors_postgres",
+
+  "pk.mode": "record_key",
+  "pk.fields": "ORDER_ID",
+
+  "consumer.override.max.poll.records": "500",
+
+  "transforms": "topicName",
+
+  "_comment" : "drop _WITH_SCHEMA suffix from the topic name, so what is left is used as the table name.",
+  "transforms.topicName.type":"org.apache.kafka.connect.transforms.RegexRouter",
+  "transforms.topicName.regex":"(.*)_WITH_SCHEMA",
+  "transforms.topicName.replacement":"$1"
+}

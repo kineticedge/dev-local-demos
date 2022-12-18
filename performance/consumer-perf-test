@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if ! [ -x "$(command -v jq)" ]; then
+    echo ""
+    echo "jq is not found, please install and make it available on your path, https://stedolan.github.io/jq"
+    echo ""
+    exit
+fi
+
+BOOTSTRAP_SERVER=localhost:19092
+PERF_TOPIC=performance-a
+
+kafka-consumer-perf-test \
+    --topic "$PERF_TOPIC" \
+    --bootstrap-server "$BOOTSTRAP_SERVER" \
+    --messages 3000000 \
+    | jq -R .| jq -sr 'map(./",")|transpose|map(join(": "))[]'

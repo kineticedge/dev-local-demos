@@ -16,6 +16,9 @@ CONNECT=${BIN}/connect
 KSQL_SHELL=${BIN}/ksql-shell
 DRUID=${BIN}/druid
 
+# ensure aliases are accessible from within functions, when bash shell is used.
+shopt -s expand_aliases
+
 alias d='docker'
 alias dc='docker compose'
 alias kt='kafka-topics --bootstrap-server localhost:19092,localhost:29092,localhost:39092'

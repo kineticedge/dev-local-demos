@@ -1,0 +1,8 @@
+create or replace stream ORDERS (
+   "order_id"  varchar key,
+   "user_id"   varchar,
+   "store_id"  varchar,
+   "quantity"  bigint,
+   "amt"       decimal(4,2),
+   "ts"        string
+) with (kafka_topic='ORDERS', value_format='json', key_format='kafka');

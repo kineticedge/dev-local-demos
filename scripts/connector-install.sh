@@ -4,7 +4,6 @@ if [ "$DEV_LOCAL" == "" ]; then
     exit 1
 fi
 
-
 function installPlugin() {
 
     connector=$1
@@ -30,7 +29,7 @@ function installPlugin() {
 
 function installPlugins() {
   declare -a CONNECTORS="$@"
-  for connector in "${CONNECTORS[@]}" ; do
+  for connector in ${CONNECTORS[@]} ; do
     installPlugin $connector
   done
 }
