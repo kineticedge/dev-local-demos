@@ -9,7 +9,7 @@
   "connection.user" : "${file:/etc/kafka-connect/secrets/postgres.properties:CONNECTION_USER}",
   "connection.password" : "${file:/etc/kafka-connect/secrets/postgres.properties:CONNECTION_PASSWORD}",
 
-  "tasks.max": "4",
+  "tasks.max": "5",
 
   "_comment": "if the connect cluster uses these as the default, they can be omitted",
   "key.converter": "io.confluent.connect.avro.AvroConverter",
@@ -19,14 +19,11 @@
   "value.converter.schemas.enable": "true",
   "value.converter.schema.registry.url": "http://schema-registry:8081",
 
-  "topics.regex": "ORDERS_WITH_SCHEMA",
+  "topics.regex": "(.*)_WITH_SCHEMA",
   "table.name.format": "${topic}",
 
   "_comment" : "quote to avoid table and column names conflicting with keywords",
   "quote.sql.identifiers": "always",
-  "quote.database.names": "always",
-  "quote.table.names": "always",
-  "quote.column.names": "always",
 
   "connection.attempts" : "3",
   "connection.backoff.ms" : "100",
@@ -45,9 +42,9 @@
   "errors.deadletterqueue.topic.name": "JdbcSinkConnector_errors_postgres",
 
   "pk.mode": "record_key",
-  "pk.fields": "ORDER_ID",
 
   "consumer.override.max.poll.records": "500",
+  "consumer.override.partition.assignment.strategy": "org.apache.kafka.clients.consumer.RoundRobinAssignor",
 
   "transforms": "topicName",
 

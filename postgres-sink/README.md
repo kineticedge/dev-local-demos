@@ -41,13 +41,13 @@ This script downloads them from the confluent hub and installs them so the conne
 
   * creates kafka topics
   * creates database tables in Postgres
-  * create ksql query to read data from a topic with JSON data
-  * create ksql query to create a topic with a schema associated witht the key and value
+  * create ksql queries to read data from a topics with JSON data
+  * create ksql queries to create the topics with a schema associated with the key and value
   * create a connector to write the data from the schema-associated topic to Postgres
   
 ### `generate.sh`
 
-  * generates a ranom order or N orders as non-schema based JSON to the ORDERS topic.
+  * generates N random orders or users non-schema based JSON to the ORDERS or USERS topic.
 
 ## Teardown
 

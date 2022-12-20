@@ -11,12 +11,16 @@ heading "setup: started"
 subheading "kafka: create topics"
 
 declare -a topics=(
-  ORDERS
+  "USERS;2"
+  "ORDERS;4"
 )
 
 for topic in "${topics[@]}"; do
-   echo "creating topic: $topic"
-   kt --if-not-exists --create --replication-factor 3 --partitions 4 --topic "$topic" | grep -v "WARNING: Due to limitations in metric names,"
+
+      TOPIC=${topic%%;*}
+      PARTITIONS=${topic#*;}
+
+   kt --if-not-exists --create --replication-factor 3 --partitions "$PARTITIONS" --topic "$TOPIC" | grep -v "WARNING: Due to limitations in metric names,"
 done
 
 subheading "postgres: create tables"
@@ -30,6 +34,14 @@ create table "ORDERS" (
     "AMT" decimal(4,2) NULL,
     "TS" timestamp NULL,
     primary key ("ORDER_ID")
+);
+
+drop table if exists "USERS";
+create table "USERS" (
+    "USER_ID" varchar(10) NOT NULL,
+    "FIRST_NAME" varchar(200) NULL,
+    "LAST_NAME" varchar(200) NULL,
+    primary key ("USER_ID")
 );
 
 DO
@@ -49,8 +61,10 @@ rm -f "${DEV_LOCAL}/postgres/data/schema.sql"
 
 subheading "ksql : configuration tables and streams in ksqlDB"
 
-$KSQL_SHELL ./ksql/input.ksql
-$KSQL_SHELL ./ksql/orders.ksql
+$KSQL_SHELL ./ksql/orders-input.ksql
+$KSQL_SHELL ./ksql/orders-output.ksql
+$KSQL_SHELL ./ksql/users-input.ksql
+$KSQL_SHELL ./ksql/users-output.ksql
 
 subheading "connect : start postgres sink connector"
 

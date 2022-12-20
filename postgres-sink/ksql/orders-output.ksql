@@ -1,0 +1,12 @@
+create or replace stream ORDERS_WITH_SCHEMA with(KEY_FORMAT='avro', VALUE_FORMAT='avro')
+as
+SELECT
+  STRUCT(ORDER_ID:=`order_id`) as PK,
+  "user_id" as USER_ID,
+  "store_id" as STORE_ID,
+  "quantity" as QUANTITY,
+  "amt" as AMT,
+  PARSE_TIMESTAMP("ts", 'yyyy-MM-dd HH:mm:ss', 'UTC') as TS
+FROM ORDERS
+PARTITION BY STRUCT(ORDER_ID:=`order_id`);
+
