@@ -1,5 +1,9 @@
 .idea
+.DS_Store
 /tmp/*
 build
 .gradle
 run.sh
+gradle
+gradlew
+gradlew.bat

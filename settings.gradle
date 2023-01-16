@@ -1,0 +1,14 @@
+rootProject.name = 'dev-local-demos'
+
+buildscript {
+	repositories {
+		gradlePluginPortal()
+		mavenCentral()
+	}
+}
+
+include 'flink_application'
+include 'druid-late_publisher'
+
+project(":flink_application").projectDir = file('flink/application')
+project(":druid-late_publisher").projectDir = file('druid-late/publisher')
