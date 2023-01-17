@@ -20,6 +20,6 @@ $CONNECT create ./connectors/datagen-orders.json
 subheading "launch application"
 (cd application; gradle build shadowJar; cp ./build/libs/flink_application-all.jar ../../../dev-local/flink/jars)
 
-docker exec -it flink_jobmanager sh -c "flink run --detached /jars/flink_application-all.jar"
+docker exec -it flink_jobmanager sh -c "flink run -p 4 --detached /jars/flink_application-all.jar"
 
 footing "setup completed."
