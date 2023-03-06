@@ -43,6 +43,7 @@ for i in $(seq $COUNT); do
   user_id=$(number 1000)
   quantity=$(number 9999)
   amt=$(echo "scale=2; $(number 9999)/100" | bc)
+  #amt=$(echo "scale=2; $(number 9999999)/100000" | bc)
 
   ts=$(date -u +"%Y-%m-%d %H:%M:%S")
 

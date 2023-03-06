@@ -11,7 +11,7 @@
     "value.converter.schemas.enable": "true",
 
     "max.interval": 1000,
-    "iterations": 1000,
+    "iterations": 100000,
     "tasks.max": "1",
 
     "schema.filename": "/data/datagen/order.avsc",

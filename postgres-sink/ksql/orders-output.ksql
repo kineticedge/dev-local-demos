@@ -6,7 +6,8 @@ SELECT
   "store_id" as STORE_ID,
   "quantity" as QUANTITY,
   "amt" as AMT,
-  PARSE_TIMESTAMP("ts", 'yyyy-MM-dd HH:mm:ss', 'UTC') as TS
+  PARSE_TIMESTAMP("ts", 'yyyy-MM-dd HH:mm:ss', 'UTC') as TS,
+  PARSE_DATE(SUBSTRING("ts", 1, 10), 'yyyy-MM-dd') as DT
 FROM ORDERS
 PARTITION BY STRUCT(ORDER_ID:=`order_id`);
 

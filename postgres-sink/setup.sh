@@ -33,6 +33,7 @@ create table "ORDERS" (
     "QUANTITY" integer NULL,
     "AMT" decimal(4,2) NULL,
     "TS" timestamp NULL,
+    "DT" date NULL,
     primary key ("ORDER_ID")
 );
 
@@ -43,6 +44,15 @@ create table "USERS" (
     "LAST_NAME" varchar(200) NULL,
     primary key ("USER_ID")
 );
+
+drop table if exists "USERS_2";
+create table "USERS_2" (
+    "FIRST_NAME" varchar(200) NULL,
+    "LAST_NAME" varchar(200) NULL,
+    "NAME" varchar(400) NULL,
+    primary key ("FIRST_NAME", "LAST_NAME")
+);
+
 
 DO
 \$do\$
@@ -65,6 +75,7 @@ $KSQL_SHELL ./ksql/orders-input.ksql
 $KSQL_SHELL ./ksql/orders-output.ksql
 $KSQL_SHELL ./ksql/users-input.ksql
 $KSQL_SHELL ./ksql/users-output.ksql
+$KSQL_SHELL ./ksql/users-2-output.ksql
 
 subheading "connect : start postgres sink connector"
 

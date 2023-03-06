@@ -12,6 +12,7 @@ import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.typeutils.TupleTypeInfo;
+import org.apache.flink.configuration.Configuration;
 import org.apache.flink.connector.kafka.sink.KafkaSink;
 import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
@@ -28,7 +29,13 @@ public class KafkaRead {
 
     public static void main(String[] args) throws Exception {
 
-        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment().enableCheckpointing(100L);
+        Configuration configuration = new Configuration();
+        configuration.setString("pipeline.name", "example-pipeline");
+
+        StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment()
+                .enableCheckpointing(5000L);
+
+        env.configure(configuration);
 
         String bootStrapServers = "broker-1:9092,broker-2:9092,broker-3:9092";
 
@@ -40,7 +47,7 @@ public class KafkaRead {
                 .setTopics("datagen.orders")
                 .setDeserializer(new AvroDeserialization<>(OrderKey.class, Order.class, "http://schema-registry:8081"))
                 .setProperty("commit.offsets.on.checkpoint", "true")
-                .setProperty("group.id", "FLINK")
+                .setProperty("group.id", "flink-example")
                 .setStartingOffsets(OffsetsInitializer.committedOffsets(OffsetResetStrategy.EARLIEST))
                 .build();
 
@@ -49,7 +56,7 @@ public class KafkaRead {
                 .setRecordSerializer(new AvroSerialization<>(OrderKey.class, PurchaseOrder.class, "purchase-orders", "http://schema-registry:8081"))
                 .build();
 
-        env.fromSource(source, WatermarkStrategy.noWatermarks(), "Kafka Source")
+        env.fromSource(source, WatermarkStrategy.noWatermarks(), "DatagenOrders")
                 .map(kv -> {
                     return new Tuple2<>(kv.f0, convert(kv.f1));
                 }, new TupleTypeInfo<>(TypeInformation.of(OrderKey.class), TypeInformation.of(PurchaseOrder.class)))

@@ -7,7 +7,7 @@ cd "$(dirname -- "$0")"
 
 declare -a CONNECTORS=(
   "confluentinc-kafka-connect-avro-converter;confluentinc/kafka-connect-avro-converter:7.3.0"
-  "confluentinc-kafka-connect-jdbc;confluentinc/kafka-connect-jdbc:10.6.1"
+  "confluentinc-kafka-connect-jdbc;confluentinc/kafka-connect-jdbc:10.6.2"
 )
 
 # shellcheck disable=SC2068

@@ -9,7 +9,7 @@
   "connection.user" : "${file:/etc/kafka-connect/secrets/postgres.properties:CONNECTION_USER}",
   "connection.password" : "${file:/etc/kafka-connect/secrets/postgres.properties:CONNECTION_PASSWORD}",
 
-  "tasks.max": "5",
+  "tasks.max": "3",
 
   "_comment": "if the connect cluster uses these as the default, they can be omitted",
   "key.converter": "io.confluent.connect.avro.AvroConverter",

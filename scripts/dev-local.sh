@@ -15,6 +15,7 @@ BIN=${DEV_LOCAL}/bin
 CONNECT=${BIN}/connect
 KSQL_SHELL=${BIN}/ksql-shell
 DRUID=${BIN}/druid
+PINOT=${BIN}/pinot
 
 # ensure aliases are accessible from within functions, when bash shell is used.
 shopt -s expand_aliases
@@ -54,17 +55,17 @@ function is_connect_ready() {
 }
 
 function heading() {
-  tput setaf 2; printf "$@\n"; tput sgr 0
+  tput setaf 2; printf "%s\n" "$@"; tput sgr 0
 }
 
 function footing() {
-  tput setaf 4; printf "$@\n"; tput sgr 0
+  tput setaf 4; printf "%s\n" "$@"; tput sgr 0
 }
 
 function subheading() {
-  tput setaf 3; printf "$@\n"; tput sgr 0
+  tput setaf 3; printf "%s\n" "$@"; tput sgr 0
 }
 
 function error_msg() {
-  tput setaf 5; printf "\n$@\n\n"; tput sgr 0
+  tput setaf 5; printf "\n%s\n\n" "$@"; tput sgr 0
 }
