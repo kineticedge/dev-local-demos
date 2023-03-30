@@ -9,12 +9,19 @@
   "database.user": "root",
   "database.password": "mysql",
 
-  "___database.server.id": "111111",
+  "database.server.id": "111111",
   "database.server.name": "_mysql_",
+
+  "_comment" : "in debeizum 2+, topic.prefix used instead of database.server.name for topic prefixing.",  
+  "topic.prefix" : "_mysql_",
 
   "database.include.list": "main",
 
   "snapshot.mode" : "schema_only",
+
+  "schema.history.internal.kafka.topic": "MYSQL",
+  "schema.history.internal.kafka.bootstrap.servers": "broker-1:9092,broker-2:9092",
+
 
   "database.history.kafka.bootstrap.servers": "broker-1:9092,broker-2:9092,broker-3:9092",
   "database.history.kafka.topic": "dbhistory._mysql_",

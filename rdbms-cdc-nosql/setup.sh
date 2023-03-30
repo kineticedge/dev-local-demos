@@ -115,21 +115,21 @@ subheading "connect : start debezium mysql5 cdc source connector"
 $CONNECT create ./connectors/mysql5-cdc.json
 $CONNECT status ./connectors/mysql5-cdc.json
 
-subheading "cassandra : create keyspace and tables"
-cat > ${DEV_LOCAL}/cassandra/data/schema.sql <<EOF
-create keyspace if not exists "main" with replication = {'class':'SimpleStrategy','replication_factor':1};
-use "main";
-create table "orders" (order_id text primary key, store_id text, user_id text, quantity int, amount decimal, ts timestamp);
-create table "orders_enriched" (order_id text primary key, store_id text, store_name text, user_id text, user_name text, quantity int, amount decimal, ts timestamp);
-create table "all_orders" (source_system text, order_id text, store_id text, store_name text, user_id text, user_name text, quantity int, amount decimal, ts timestamp, PRIMARY KEY (source_system, order_id));
-create table "all_orders_converted" (source_system text, order_id text, store_id text, store_name text, user_id text, user_name text, quantity int, amount decimal, ts timestamp, PRIMARY KEY (source_system, order_id));
-EOF
-docker exec -it cassandra sh -c "cat /data/schema.sql | cqlsh --password=cassandra"
-rm -f ${DEV_LOCAL}/cassandra/data/schema.sql
+#subheading "cassandra : create keyspace and tables"
+#cat > ${DEV_LOCAL}/cassandra/data/schema.sql <<EOF
+#create keyspace if not exists "main" with replication = {'class':'SimpleStrategy','replication_factor':1};
+#use "main";
+#create table "orders" (order_id text primary key, store_id text, user_id text, quantity int, amount decimal, ts timestamp);
+#create table "orders_enriched" (order_id text primary key, store_id text, store_name text, user_id text, user_name text, quantity int, amount decimal, ts timestamp);
+#create table "all_orders" (source_system text, order_id text, store_id text, store_name text, user_id text, user_name text, quantity int, amount decimal, ts timestamp, PRIMARY KEY (source_system, order_id));
+#create table "all_orders_converted" (source_system text, order_id text, store_id text, store_name text, user_id text, user_name text, quantity int, amount decimal, ts timestamp, PRIMARY KEY (source_system, order_id));
+#EOF
+#docker exec -it cassandra sh -c "cat /data/schema.sql | cqlsh --password=cassandra"
+#rm -f ${DEV_LOCAL}/cassandra/data/schema.sql
 
-subheading "connect : start the datastax cassandra sink connector"
-$CONNECT create ./connectors/cassandra.json
-$CONNECT status ./connectors/cassandra.json
+#subheading "connect : start the datastax cassandra sink connector"
+#$CONNECT create ./connectors/cassandra.json
+#$CONNECT status ./connectors/cassandra.json
 
 subheading "connect : start the Mongo mongoDB sink connector"
 $CONNECT create ./connectors/mongo.json

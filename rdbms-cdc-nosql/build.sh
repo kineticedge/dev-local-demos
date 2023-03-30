@@ -17,13 +17,13 @@ else
   echo "connector already installed: mongodb-kafka-connect-mongodb"
 fi
 
-if [ ! -d "${DEV_LOCAL}/connect/jars/datastax-kafka-connect-cassandra-sink" ]; then
-  echo "installing connector: datastax-kafka-connect-cassandra-sink"
-  confluent-hub install --worker-configs ../tmp/connect-distributed.properties --component-dir ${DEV_LOCAL}/connect/jars --no-prompt datastax/kafka-connect-cassandra-sink:1.4.0
-  echo""
-else
-  echo "connector already installed: datastax-kafka-connect-cassandra-sink"
-fi
+#if [ ! -d "${DEV_LOCAL}/connect/jars/datastax-kafka-connect-cassandra-sink" ]; then
+#  echo "installing connector: datastax-kafka-connect-cassandra-sink"
+#  confluent-hub install --worker-configs ../tmp/connect-distributed.properties --component-dir ${DEV_LOCAL}/connect/jars --no-prompt datastax/kafka-connect-cassandra-sink:1.4.0
+#  echo""
+#else
+#  echo "connector already installed: datastax-kafka-connect-cassandra-sink"
+#fi
 
 if [ ! -d "${DEV_LOCAL}/connect/jars/debezium-debezium-connector-mysql" ]; then
   echo "installing connector: debezium-debezium-connector-mysql"
@@ -41,13 +41,13 @@ else
   echo "connector already installed: debezium-debezium-connector-postgresql"
 fi
 
-if [ ! -d "${DEV_LOCAL}/connect/jars/confluentinc-kafka-connect-elasticsearch" ]; then
-  echo "installing connector: kafka-connect-elasticsearch"
-  confluent-hub install --worker-configs ../tmp/connect-distributed.properties --component-dir ${DEV_LOCAL}/connect/jars --no-prompt confluentinc/kafka-connect-elasticsearch:14.0.0
-  echo""
-else
-  echo "connector already installed: kafka-connect-elasticsearch"
-fi
+#if [ ! -d "${DEV_LOCAL}/connect/jars/confluentinc-kafka-connect-elasticsearch" ]; then
+#  echo "installing connector: kafka-connect-elasticsearch"
+#  confluent-hub install --worker-configs ../tmp/connect-distributed.properties --component-dir ${DEV_LOCAL}/connect/jars --no-prompt confluentinc/kafka-connect-elasticsearch:14.0.0
+#  echo""
+#else
+#  echo "connector already installed: kafka-connect-elasticsearch"
+#fi
 
 
 
