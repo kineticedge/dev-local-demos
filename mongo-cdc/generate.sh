@@ -19,6 +19,7 @@ function random() {
 
 for i in $(seq "$COUNT"); do
 
+        #order_id=A001
         order_id=$(random)
         store_id=$(number 100)
         user_id=$(number 1000)

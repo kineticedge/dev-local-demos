@@ -1,6 +1,6 @@
 {
   "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
-  "tasks.max": 1,
+  "tasks.max": 4,
 
   "connection.uri": "mongodb://root:mongo@mongo:27017",
   "database": "backup",
@@ -19,6 +19,15 @@
   "errors.deadletterqueue.topic.name":"connect.sink.dlt.MongoSinkConnector",
   "errors.log.include.messages" : true,
   "errors.deadletterqueue.context.headers.enable" : true,
-  "errors.deadletterqueue.topic.replication.factor": 3
+  "errors.deadletterqueue.topic.replication.factor": 3,
 
+  "writemodel.strategy": "com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy",
+
+  "_document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.FullKeyStrategy",
+
+  "document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy",
+  "document.id.strategy.partial.value.projection.list": "order_id",
+  "document.id.strategy.partial.value.projection.type": "AllowList",
+
+  "document.id.strategy.overwrite.existing": "true"
 }
