@@ -7,12 +7,13 @@ plugins {
 apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'application'
-apply plugin: 'eclipse'
 
-group = 'io.kineticedge.flink'
-description = "application"
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+java {
+    group = 'io.kineticedge.flink'
+    description = "application"
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 repositories {
     mavenLocal()
@@ -28,13 +29,13 @@ avro {
 
 dependencies {
 
-    implementation group: 'org.apache.flink', name: 'flink-connector-kafka', version: flink_version
+    implementation group: 'org.apache.flink', name: 'flink-connector-kafka', version: flink_connector_kafka_version
     implementation group: 'org.apache.flink', name: 'flink-streaming-java', version: flink_version
     implementation group: 'org.apache.avro', name: 'avro', version: avro_version
     implementation "io.confluent:kafka-avro-serializer:${confluent_io_version}"
     implementation "io.confluent:kafka-streams-avro-serde:${confluent_io_version}"
 
-    implementation group: 'org.apache.flink', name: 'flink-avro-confluent-registry', version: '1.16.0'
+    implementation group: 'org.apache.flink', name: 'flink-avro-confluent-registry', version: flink_version
 
     implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version
 
