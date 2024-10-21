@@ -1,0 +1,18 @@
+{
+  "type" : "compact",
+  "dataSource" : "opensky",
+  "interval": "2024-10-09T11:00:00.000Z/2024-10-09T16:00:00.000Z",
+  "tuningConfig" : {
+    "type" : "index_parallel",
+    "maxRowsPerSegment" : 500000,
+    "maxRowsInMemory" : 25000
+  },
+  "granularitySpec": {
+    "type": "uniform",
+    "segmentGranularity": "hour",
+    "queryGranularity": "five_minute",
+    "rollup": true
+  }
+}
+
+

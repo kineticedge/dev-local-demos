@@ -35,23 +35,19 @@ application {
     mainClass = "dev.buesing.ksd.publisher.Main"
 }
 
-task buildRunScript() {
+// creates a shell file that can set the java class-path for integration tests.
+ext.createIntegrationClasspath = { scriptName ->
+    def cp = sourceSets.main.runtimeClasspath.collect { "export CP=\"\${CP}:${it}\"" }.join("\n")
+    def file = new File(projectDir, scriptName)
+    file.text = 'export CP=""\n' + cp + '\n'
+    file.setExecutable(true)
+}
+
+task postBuildScript() {
     doLast {
-
-        def cp = sourceSets.main.runtimeClasspath.collect{"export CP=\"\${CP}:${it}\""}.join("\n")
-
-        def f = new File(projectDir, "run.sh")
-        f.text = """#!/bin/sh
-set -e
-gradle assemble > /dev/null
-
-export CP=""
-${cp}
-
-java -cp \${CP} dev.buesing.ksd.publisher.Main "\$@"
-"""
-        f.setExecutable(true)
+        createIntegrationClasspath('./.classpath.sh')
     }
 }
 
-build.finalizedBy buildRunScript
+build.finalizedBy postBuildScript
+

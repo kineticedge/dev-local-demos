@@ -3,7 +3,8 @@
 /tmp/*
 build
 .gradle
-run.sh
+.classpath.sh
 gradle
 gradlew
 gradlew.bat
+/pinot-startree-index/tmp/*

@@ -1,0 +1,103 @@
+{
+  "type": "kafka",
+  "spec": {
+    "ioConfig": {
+      "type": "kafka",
+      "consumerProperties": {
+        "bootstrap.servers": "broker-1:9092,broker-2:9092,broker-3:9092",
+        "isolation.level": "read_committed"
+      },
+      "topic": "opensky",
+      "inputFormat": {
+        "type": "json"
+      },
+      "useEarliestOffset": true,
+      "pollTimeout": 100,
+      "period": "PT30S",
+      "taskCount": 4,
+      "taskDuration" : "PT10M"
+    },
+    "tuningConfig": {
+      "type": "kafka",
+      "maxRowsInMemory": 10000,
+      "maxRowsPerSegment": 50000,
+      "maxTotalRows": 200000
+    },
+
+    "dataSchema": {
+      "dataSource": "opensky",
+      "timestampSpec": {
+        "column": "timePosition",
+        "format": "auto"
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          "id",
+          "callsign",
+          "originCountry",
+          "onGround",
+          "positionSource"
+        ]
+      },
+      "metricsSpec": [
+        {
+          "type": "doubleLast",
+          "name": "latitude",
+          "fieldName": "latitude"
+        },
+        {
+          "type": "doubleLast",
+          "name": "longitude",
+          "fieldName": "longitude"
+        },
+        {
+          "type": "stringLast",
+          "name": "callsignLatest",
+          "fieldName": "callsign"
+        },
+        {
+          "type": "count",
+          "name": "count"
+        },
+        {
+          "type": "doubleLast",
+          "name": "barometricAltitude",
+          "fieldName": "barometricAltitude"
+        },
+        {
+          "type": "doubleLast",
+          "name": "velocity",
+          "fieldName": "velocity"
+        },
+        {
+          "type": "doubleLast",
+          "name": "heading",
+          "fieldName": "heading"
+        },
+        {
+          "type": "doubleLast",
+          "name": "verticalRate",
+          "fieldName": "verticalRate"
+        },
+        {
+          "type": "doubleLast",
+          "name": "geometricAltitude",
+          "fieldName": "geometricAltitude"
+        }
+      ],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "fifteen_minute",
+        "queryGranularity": "none",
+        "rollup": true,
+        "intervals": null
+      },
+      "transformSpec": {
+        "filter": null,
+        "transforms": [
+        ]
+      }
+    }
+  }
+}
+

@@ -32,7 +32,8 @@
       "dimensionsSpec": {
         "dimensions": [
           "sku",
-          "storeId"
+          "storeId",
+          "userId"
         ],
         "dimensionExclusions": [
         ]
