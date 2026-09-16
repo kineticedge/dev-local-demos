@@ -1,0 +1,53 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+
+group = 'io.kineticedge.ksd'
+description = "publisher"
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "https://packages.confluent.io/maven/"
+    }
+}
+
+dependencies {
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
+    implementation group: 'com.beust', name: 'jcommander', version: jcommander_version
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jackson_version
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jackson_version
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jackson_version
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: apache_commons_version
+    implementation(group: 'org.apache.kafka', name: 'kafka-clients', version: kafka_version) {
+        version {
+            strictly kafka_version
+        }
+    }
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version
+}
+
+application {
+    mainClass = "io.kineticedge.ksd.publisher.Main"
+}
+
+// creates a shell file that can set the java class-path for integration tests.
+ext.createIntegrationClasspath = { scriptName ->
+    def cp = sourceSets.main.runtimeClasspath.collect { "export CP=\"\${CP}:${it}\"" }.join("\n")
+    def file = new File(projectDir, scriptName)
+    file.text = 'export CP=""\n' + cp + '\n'
+    file.setExecutable(true)
+}
+
+task postBuildScript() {
+    doLast {
+        createIntegrationClasspath('./.classpath.sh')
+    }
+}
+
+build.finalizedBy postBuildScript
+

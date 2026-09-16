@@ -1,0 +1,59 @@
+{
+  "type": "record",
+  "name": "Value",
+  "namespace": "_mysql5_.main.orders",
+  "fields": [
+    {
+      "name": "order_id",
+      "type": "string"
+    },
+    {
+      "name": "store_id",
+      "type": "string"
+    },
+    {
+      "name": "user_id",
+      "type": "string"
+    },
+    {
+      "name": "quantity",
+      "type": [
+        "null",
+        "int"
+      ],
+      "default": null
+    },
+    {
+      "name": "amount",
+      "type": [
+        "null",
+        {
+          "type": "bytes",
+          "scale": 2,
+          "precision": 4,
+          "connect.version": 1,
+          "connect.parameters": {
+            "scale": "2",
+            "connect.decimal.precision": "4"
+          },
+          "connect.name": "org.apache.kafka.connect.data.Decimal",
+          "logicalType": "decimal"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "ts",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "connect.version": 1,
+          "connect.name": "io.debezium.time.Timestamp"
+        }
+      ],
+      "default": null
+    }
+  ],
+  "connect.name": "_mysql5_.main.orders.Value"
+}

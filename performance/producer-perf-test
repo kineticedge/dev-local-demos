@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+BOOTSTRAP_SERVER=localhost:19092
+PERF_TOPIC=performance-a
+
+kafka-topics \
+  --bootstrap-server $BOOTSTRAP_SERVER \
+  --create \
+  --if-not-exists \
+  --topic "$PERF_TOPIC" \
+  --replication-factor 3 \
+  --partitions 4
+
+
+NUM_RECORDS=1000000
+RECORD_SIZE=1024
+
+kafka-producer-perf-test \
+    --topic "$PERF_TOPIC" \
+    --throughput -1 \
+    --num-records $NUM_RECORDS \
+    --record-size $RECORD_SIZE \
+    --producer-props \
+        acks=all \
+        bootstrap.servers="$BOOTSTRAP_SERVER"

@@ -1,0 +1,69 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id "com.github.davidmc24.gradle.plugin.avro" version "1.5.0"
+
+}
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'application'
+
+java {
+    group = 'io.kineticedge.flink'
+    description = "application"
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "https://packages.confluent.io/maven/"
+    }
+}
+
+avro {
+    createSetters = true
+}
+
+dependencies {
+
+    implementation group: 'org.apache.flink', name: 'flink-connector-kafka', version: flink_connector_kafka_version
+    implementation group: 'org.apache.flink', name: 'flink-streaming-java', version: flink_version
+    implementation group: 'org.apache.avro', name: 'avro', version: avro_version
+    implementation "io.confluent:kafka-avro-serializer:${confluent_io_version}"
+    implementation "io.confluent:kafka-streams-avro-serde:${confluent_io_version}"
+
+    implementation group: 'org.apache.flink', name: 'flink-avro-confluent-registry', version: flink_version
+
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: slf4j_version
+
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'io.kineticedge.flink.KafkaRead'
+        )
+    }
+}
+
+shadowJar {
+    manifest {
+        attributes(
+                'Main-Class': 'io.kineticedge.flink.KafkaRead'
+        )
+    }
+    dependencies {
+        exclude(dependency {
+//            it.moduleGroup != 'com.auth0'
+        })
+    }
+}
+
+
+application {
+    mainClass = "io.kineticedge.flink.KafkaRead"
+}
+

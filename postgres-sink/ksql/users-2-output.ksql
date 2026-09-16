@@ -1,0 +1,15 @@
+create stream USERS_2_WITH_SCHEMA with(KEY_FORMAT='avro', VALUE_FORMAT='avro')
+as
+SELECT
+  STRUCT(
+    FIRST_NAME:=`first_name`,
+    LAST_NAME:=`last_name`
+  ) as PK,
+  CONCAT(`first_name`, ' ', `last_name`) as NAME
+FROM USERS
+PARTITION BY
+  STRUCT(
+    FIRST_NAME:=`first_name`,
+    LAST_NAME:=`last_name`
+  );
+

@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "Value",
+  "namespace": "_mysql5_.main.stores",
+  "fields": [
+    {
+      "name": "store_id",
+      "type": "string"
+    },
+    {
+      "name": "store_name",
+      "type": "string"
+    }
+  ],
+  "connect.name": "_mysql5_.main.stores.Value"
+}

@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "Value",
+  "namespace": "_mysql_.main.users",
+  "fields": [
+    {
+      "name": "user_id",
+      "type": "string"
+    },
+    {
+      "name": "user_name",
+      "type": "string"
+    }
+  ],
+  "connect.name": "_mysql_.main.users.Value"
+}

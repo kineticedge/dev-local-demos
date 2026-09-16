@@ -1,0 +1,18 @@
+{
+   "namespace":"io.kineticedge.order",
+   "name":"OrderKey",
+   "type":"record",
+   "fields":[
+      {
+         "name":"orderId",
+         "type":{
+            "type":"string",
+            "arg.properties":{
+               "iteration":{
+                  "start":0
+               }
+            }
+         }
+      }
+   ]
+}

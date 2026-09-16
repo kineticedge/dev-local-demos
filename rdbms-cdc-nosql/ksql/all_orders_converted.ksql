@@ -1,0 +1,16 @@
+create stream "ALL_ORDERS_CONVERTED" with(VALUE_FORMAT='avro')
+as
+SELECT
+  SOURCE_SYSTEM,
+  ORDER_KEY,
+  ORDER_TS,
+  ORDER_ID,
+  USER_ID,
+  USER_NAME,
+  STORE_ID,
+  STORE_NAME,
+  QUANTITY,
+  cast(AMOUNT as string) as AMOUNT
+ FROM ALL_ORDERS;
+
+describe ALL_ORDERS_CONVERTED extended;

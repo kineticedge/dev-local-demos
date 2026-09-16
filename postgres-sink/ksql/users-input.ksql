@@ -1,0 +1,5 @@
+create or replace stream USERS (
+   "user_id"   varchar key,
+   "first_name"  varchar,
+   "last_name"  varchar
+) with (kafka_topic='USERS', value_format='json', key_format='kafka');

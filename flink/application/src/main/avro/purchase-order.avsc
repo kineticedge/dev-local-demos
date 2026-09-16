@@ -1,0 +1,67 @@
+{
+  "namespace": "io.kineticedge.purchaseorder",
+  "name": "PurchaseOrder",
+  "type": "record",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": {
+        "type": "int"
+      }
+    },
+    {
+      "name": "storeId",
+      "type": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "userId",
+      "type": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "lineItems",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "PurchaseOrderLineItem",
+          "type": "record",
+          "fields": [
+            {
+              "name": "sku",
+              "type": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "quantity",
+              "type": {
+                "type": "int"
+              }
+            },
+            {
+              "name": "price",
+              "type": {
+                "type": "double"
+              }
+            },
+            {
+              "name": "retailPrice",
+              "type": {
+                "type": "double"
+              }
+            }
+          ]
+        },
+        "arg.properties": {
+          "length": {
+            "min": 1,
+            "max": 5
+          }
+        }
+      }
+    }
+  ]
+}

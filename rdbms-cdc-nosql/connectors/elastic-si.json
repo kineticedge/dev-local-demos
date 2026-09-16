@@ -1,0 +1,36 @@
+{
+  "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+
+  "_topics": "",
+  "topics.regex": "ALL_ORDERS.*",
+  "connection.url": "http://elasticsearch:9200",
+  
+  "key.ignore": "true",
+
+  "_comment" : "do not let the connector create the index in elastic, use existing index",
+  "schema.ignore": "true",
+
+  "_comment" : "change topic SMT requires this",
+  "flush.synchronously" : "true",
+
+  "type.name": "_doc",
+  "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+  "value.converter": "io.confluent.connect.avro.AvroConverter",
+  "value.converter.schemas.enable" : "true",
+  "value.converter.schema.registry.url": "http://schema-registry:8081",
+  "behavior.on.malformed.documents": "warn",
+
+  "transforms" : "InsertMessageTime,ConvertTimeValue,ChangeTopic",
+
+  "transforms.InsertMessageTime.type" : "org.apache.kafka.connect.transforms.InsertField$Value",
+  "transforms.InsertMessageTime.timestamp.field" : "timestamp",
+
+  "transforms.ConvertTimeValue.type" : "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+  "transforms.ConvertTimeValue.target.type" : "Timestamp",
+  "transforms.ConvertTimeValue.field" : "timestamp",
+  "transforms.ConvertTimeValue.format" : "yyyy-MM-dd HH:mm:ss",
+
+  "transforms.ChangeTopic.type" : "org.apache.kafka.connect.transforms.RegexRouter",
+  "transforms.ChangeTopic.regex" : "(.*)",
+  "transforms.ChangeTopic.replacement" : "$1_si"
+}

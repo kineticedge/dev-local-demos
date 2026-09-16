@@ -1,0 +1,10 @@
+.idea
+.DS_Store
+/tmp/*
+build
+.gradle
+.classpath.sh
+gradle
+gradlew
+gradlew.bat
+/pinot-startree-index/tmp/*
